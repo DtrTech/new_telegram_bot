@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('daily:cron')->daily();
         // $schedule->command('inspire')->hourly();
         $schedule->command('fire:check_telegram_message')->everyMinute();
-        $schedule->command('fire:reconnect_daily')->hourly();
+        // $schedule->command('fire:reconnect_daily')->hourly();
     }
 
     /**
