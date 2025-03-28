@@ -188,6 +188,24 @@ class ApiController extends Controller
                     $extension = pathinfo($telegram_bot->reply_message_path, PATHINFO_EXTENSION);
                     $images = asset('storage/' . $telegram_bot->reply_message_path);
                     $image_to_set = InputFile::create($images,'image.'.$extension);
+                    
+                    $inline_keyboard = [];
+
+                    if (!empty($telegram_bot->button_link_1)) {
+                        $inline_keyboard[] = [['text' => $telegram_bot->button_text_1 ?? 'Button 1', 'url' => $telegram_bot->button_link_1]];
+                    }
+                    if (!empty($telegram_bot->button_link_2)) {
+                        $inline_keyboard[] = [['text' => $telegram_bot->button_text_2 ?? 'Button 2', 'url' => $telegram_bot->button_link_2]];
+                    }
+                    if (!empty($telegram_bot->button_link_3)) {
+                        $inline_keyboard[] = [['text' => $telegram_bot->button_text_3 ?? 'Button 3', 'url' => $telegram_bot->button_link_3]];
+                    }
+
+                    // If inline keyboard buttons exist, add them to the reply_markup
+                    if (!empty($inline_keyboard)) {
+                        $reply_markup['inline_keyboard'] = $inline_keyboard;
+                    }
+
                     $bot->sendPhoto([
                         'chat_id' => $chat_id,
                         'photo' => $image_to_set,
@@ -196,6 +214,23 @@ class ApiController extends Controller
                         'parse_mode' => 'HTML'
                     ]);
                 }else if ($telegram_bot->reply_message != null) {
+                    $inline_keyboard = [];
+
+                    if (!empty($telegram_bot->button_link_1)) {
+                        $inline_keyboard[] = [['text' => $telegram_bot->button_text_1 ?? 'Button 1', 'url' => $telegram_bot->button_link_1]];
+                    }
+                    if (!empty($telegram_bot->button_link_2)) {
+                        $inline_keyboard[] = [['text' => $telegram_bot->button_text_2 ?? 'Button 2', 'url' => $telegram_bot->button_link_2]];
+                    }
+                    if (!empty($telegram_bot->button_link_3)) {
+                        $inline_keyboard[] = [['text' => $telegram_bot->button_text_3 ?? 'Button 3', 'url' => $telegram_bot->button_link_3]];
+                    }
+
+                    // If inline keyboard buttons exist, add them to the reply_markup
+                    if (!empty($inline_keyboard)) {
+                        $reply_markup['inline_keyboard'] = $inline_keyboard;
+                    }
+                    
                     $bot->sendMessage([
                         'chat_id' => $chat_id,
                         'text' => $telegram_bot->reply_message,
