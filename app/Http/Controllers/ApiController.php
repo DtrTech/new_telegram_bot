@@ -151,37 +151,37 @@ class ApiController extends Controller
                     ]);
                 }
 
-                if(isset($data['message']['contact'])){
-                    $phone_number = $data['message']['contact']['phone_number'];
+                // if(isset($data['message']['contact'])){
+                //     $phone_number = $data['message']['contact']['phone_number'];
 
-                    $telegram_user->update([
-                        'contact_no'=>$phone_number,
-                    ]);
-                }
+                //     $telegram_user->update([
+                //         'contact_no'=>$phone_number,
+                //     ]);
+                // }
 
-                if($telegram_user->contact_no == null){
-                    $reply_markup = [
-                        'keyboard' => [
-                            [
-                                [
-                                    'text' => "Share number for Better Verification",
-                                    'request_contact' => true,
-                                ]
-                            ]
-                        ],
-                        'resize_keyboard' => true,
-                        'one_time_keyboard' => true,
-                    ];
-                }else{
-                    $reply_markup = ['remove_keyboard' => true];
-                }
-
+                // if($telegram_user->contact_no == null){
+                //     $reply_markup = [
+                //         'keyboard' => [
+                //             [
+                //                 [
+                //                     'text' => "Share number for Better Verification",
+                //                     'request_contact' => true,
+                //                 ]
+                //             ]
+                //         ],
+                //         'resize_keyboard' => true,
+                //         'one_time_keyboard' => true,
+                //     ];
+                // }else{
+                //     $reply_markup = ['remove_keyboard' => true];
+                // }
+                $reply_markup = [];
                 if($telegram_bot->reply_message_by_message_id != null && $telegram_bot->reply_message_from_telegram_id != null){
                     $bot->forwardMessage([
                         'chat_id' => $chat_id,
                         'from_chat_id' => $telegram_bot->reply_message_from_telegram_id,
                         'message_id' => $telegram_bot->reply_message_by_message_id  ,
-                        'reply_markup' => json_encode($reply_markup),
+                        // 'reply_markup' => json_encode($reply_markup),
                         'parse_mode' => 'HTML'
                     ]);
                 }else if($telegram_bot->reply_message_path != null){
