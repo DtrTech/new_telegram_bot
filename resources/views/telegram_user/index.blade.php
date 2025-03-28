@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+body.dark .dataTables_wrapper {
+    padding: 20px !important;
+}
+</style>
 <div class="middle-content container-xxl p-0">
     <div class="secondary-nav">
         <div class="breadcrumbs-container" data-page-heading="Analytics">
@@ -94,7 +99,6 @@
                     "render": function(data, type, row) {
                         return `
                             <a href="/telegram_user/view_message/${row.id}" class="btn btn-secondary btn-sm" title="View Message">View Message</a>
-                            <a href="javascript:void(0);" onclick="alert('COMING SOON');" class="btn btn-primary btn-sm" title="Chat">Chat</a>
                         `;
                     }
                 }

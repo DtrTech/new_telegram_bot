@@ -34,7 +34,7 @@ $currentRoute = request()->route()->getName();
 				</div>
 			</a>
 		</li>
-		<li class="menu {{ $currentRoute == 'telegram_user.index' ? 'active' : ''}}">
+		<li class="menu {{ $currentRoute == 'telegram_user.index' || $currentRoute == 'telegram_user.view_message' ? 'active' : ''}}">
 			<a href="{{route('telegram_user.index')}}" aria-expanded="false" class="dropdown-toggle">
 				<div class="">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
@@ -57,7 +57,7 @@ $currentRoute = request()->route()->getName();
 				</div>
 			</a>
 		</li>
-		<li class="menu {{ $currentRoute == 'telegram_bot.index' ? 'active' : ''}}">
+		<li class="menu {{ $currentRoute == 'telegram_bot.index' || $currentRoute == 'telegram_bot.create' || $currentRoute == 'telegram_bot.edit' ? 'active' : ''}}">
 			<a href="{{route('telegram_bot.index')}}" aria-expanded="false" class="dropdown-toggle">
 				<div class="">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
@@ -73,7 +73,7 @@ $currentRoute = request()->route()->getName();
 				</div>
 			</a>
 		</li>
-		<li class="menu {{ $currentRoute == 'setting.index' ? 'active' : ''}}">
+		<li class="menu {{ $currentRoute == 'setting.index'  || $currentRoute == 'setting.edit' ? 'active' : ''}}">
 			<a href="{{route('setting.index')}}" aria-expanded="false" class="dropdown-toggle">
 				<div class="">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>

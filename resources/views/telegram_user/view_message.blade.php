@@ -6,20 +6,38 @@
     word-wrap: break-word;
     white-space: normal;
 }
+body.dark .dataTables_wrapper {
+    padding: 20px !important;
+}
 </style>
-<section role="main" class="content-body">
-    <header class="page-header">
-        <h2>{{$telegram_user->telegram_id??''}}</h2>
-    </header>
+<div class="middle-content container-xxl p-0">
+    <div class="secondary-nav">
+        <div class="breadcrumbs-container" data-page-heading="Analytics">
+            <header class="header navbar navbar-expand-sm">
+                <a href="javascript:void(0);" class="btn-toggle sidebarCollapse" data-placement="bottom">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </a>
+                <div class="d-flex breadcrumb-content">
+                    <div class="page-header">
+                        <div class="page-title">
+                        </div>
+                        <nav class="breadcrumb-style-one" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">{{$telegram_user->telegram_id??''}} Messages</li>
+                            </ol>
+                        </nav>
+        
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
 
-    @include('layouts.flash-message')
-
-    <!-- start: page -->
-    <div class="row">
-        <div class="col-lg-12 mb-3">
-            <section class="card">
-                <div class="card-body">
-                    <table class="table table-bordered table-striped mb-0" id="datatable_all">
+    <div class="row layout-spacing layout-top-spacing">
+        <div class="col-lg-12">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content widget-content-area">
+                    <table id="style-3" class="table style-3 dt-table-hover non-hover">
                         <thead>
                             <tr>
                                 <th width="10%">Message Id</th>
@@ -29,41 +47,55 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach($telegram_user->messages as $s)
-                                <tr>
-                                    <td>{{$s->message_id??''}}</td>
-                                    <td>{{$s->message_time??''}}</td>
-                                    <td>{{$s->chat_type??''}}</td>
-                                    <td class="text-wrap">{{$s->text??''}}</td>
-                                </tr>
-                            @endforeach --}}
+                            <tr>
+                                <td colspan="9" class="text-center">Loading data...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
-    <!-- end: page -->
 </section>
-@endsection
-
-@section('page-js')
-    <script src="{{ asset('porto-assets/vendor/select2/js/select2.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/media/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js') }}"></script>
 @endsection
 @section('scripts')
     <script src="{{ asset('porto-assets/js/examples/examples.datatables.default.js') }}"></script>
     <script src="{{ asset('porto-assets/js/examples/examples.datatables.row.with.details.js') }}"></script>
     <script src="{{ asset('porto-assets/js/examples/examples.datatables.tabletools.js') }}"></script>
     <script>
+        
+    $(document).ready(function() {
+        var telegram_user_id = "<?php echo $telegram_user->id; ?>";
+        var table = $('#style-3').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "{{ url('telegram_user/load_message') }}/" + telegram_user_id,
+                "type": "GET",
+                "error": function(xhr, error, thrown) {
+                    console.error("Error loading data:", error, thrown);
+                    $('#style-3 tbody').html('<tr><td colspan="9" class="text-center">No data available</td></tr>');
+                }
+            },
+            "columns": [
+              { "data": "message_id" },
+              { "data": "message_time" },
+              { "data": "chat_type" },
+              { "data": "text" },
+            ],
+            "language": {
+                "emptyTable": "No data available",
+                "search": "{{ __('message.datatable-search') }}",
+                "lengthMenu": "{{ __('message.datatable-show') }} _MENU_ {{ __('message.datatable-entries') }}",
+                "info": "{{ __('message.datatable-showing') }} _START_ {{ __('message.datatable-to') }} _END_ {{ __('message.datatable-of') }} _TOTAL_ {{ __('message.datatable-entries') }}",
+                "paginate": {
+                    "previous": "{{ __('message.datatable-previous') }}",
+                    "next": "{{ __('message.datatable-next') }}"
+                }
+            }
+        });
+    });
+
     $(document).ready(function() {
         var telegram_user_id = "<?php echo $telegram_user->id; ?>";
         $('#datatable_all').DataTable({
