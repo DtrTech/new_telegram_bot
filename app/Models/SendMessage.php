@@ -21,6 +21,12 @@ class SendMessage extends Model
         'message',
         'is_sent',
         'telegram_bot_id',
+        'button_text_1',
+        'button_link_1',
+        'button_text_2',
+        'button_link_2',
+        'button_text_3',
+        'button_link_3',
     ];
 
     public function sendMessageDetails()

@@ -76,11 +76,30 @@ class TelegramMessageJob implements ShouldQueue
                             'disable_notification' => false,
                         ]);
                     }else{
+                        $reply_markup = [];
+                        $inline_keyboard = [];
+
+                        if (!empty($message->button_link_1)) {
+                            $inline_keyboard[] = [['text' => $message->button_text_1 ?? 'Button 1', 'url' => $message->button_link_1]];
+                        }
+                        if (!empty($message->button_link_2)) {
+                            $inline_keyboard[] = [['text' => $message->button_text_2 ?? 'Button 2', 'url' => $message->button_link_2]];
+                        }
+                        if (!empty($message->button_link_3)) {
+                            $inline_keyboard[] = [['text' => $message->button_text_3 ?? 'Button 3', 'url' => $message->button_link_3]];
+                        }
+
+                        // If inline keyboard buttons exist, add them to the reply_markup
+                        if (!empty($inline_keyboard)) {
+                            $reply_markup['inline_keyboard'] = $inline_keyboard;
+                        }
+
                         if($message->message_path == null){
                             $bot->sendMessage([
                                 'chat_id' => $telegram_id,
                                 'text' => $message->message,
                                 'parse_mode' => 'HTML',
+                                'reply_markup' => json_encode($reply_markup),
                                 'disable_notification' => false,
                             ]);
                         }else{
@@ -103,6 +122,7 @@ class TelegramMessageJob implements ShouldQueue
                                     'video' => $video_to_set,
                                     'caption' => $message->message,
                                     'parse_mode' => 'HTML',
+                                    'reply_markup' => json_encode($reply_markup),
                                     'disable_notification' => false,
                                 ]);
                             }else if($type == "image"){
@@ -113,6 +133,7 @@ class TelegramMessageJob implements ShouldQueue
                                     'photo' => $image_to_set,
                                     'caption' => $message->message,
                                     'parse_mode' => 'HTML',
+                                    'reply_markup' => json_encode($reply_markup),
                                     'disable_notification' => false,
                                 ]);
                             }

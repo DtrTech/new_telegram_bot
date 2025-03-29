@@ -110,6 +110,49 @@
                                 <label class="col-form-label">Message</label>
                                 <textarea class="form-control" name="message" rows="6">{{ $send_message->message ?? '' }}</textarea>
                             </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-6 col-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Button Text 1</label>
+                                        <input class="form-control" type="text" name="button_text_1" placeholder="text.." value="{{$send_message->button_text_1??''}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Button Link 1</label>
+                                        <input class="form-control" type="text" name="button_link_1" placeholder="link.." value="{{$send_message->button_link_1??''}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Button Text 2</label>
+                                        <input class="form-control" type="text" name="button_text_2" placeholder="text.." value="{{$send_message->button_text_2??''}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Button Link 2</label>
+                                        <input class="form-control" type="text" name="button_link_2" placeholder="link.." value="{{$send_message->button_link_2??''}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Button Text 3</label>
+                                        <input class="form-control" type="text" name="button_text_3" placeholder="text.." value="{{$send_message->button_text_3??''}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Button Link 3</label>
+                                        <input class="form-control" type="text" name="button_link_3" placeholder="link.." value="{{$send_message->button_link_3??''}}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <button type="submit" class="mt-2 btn btn-primary float-right" style="margin-right:10px">Submit</button>
