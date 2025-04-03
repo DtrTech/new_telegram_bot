@@ -361,13 +361,15 @@ class ApiController extends Controller
                         $is_bot = $a['is_bot'] == true?1:0;
                         $telegram_user = TelegramUser::where('telegram_id',$chat_id)->first();
                         if($is_bot != 1){
-                            $telegram_user = TelegramUser::create([
-                                'telegram_bot_id'=>$telegram_bot->id,
-                                'telegram_id'=>$chat_id,
-                                'first_name'=>$first_name,
-                                'last_name'=>$last_name,
-                                'username'=>$username,
-                            ]);
+                            if(!isset($telegram_user)){
+                                $telegram_user = TelegramUser::create([
+                                    'telegram_bot_id'=>$telegram_bot->id,
+                                    'telegram_id'=>$chat_id,
+                                    'first_name'=>$a['first_name']??'',
+                                    'last_name'=>$a['last_name']??'',
+                                    'username'=>$a['username']??'',
+                                ]);
+                            }
                             if(isset($telegram_group)){
                                 TelegramJoin::firstOrCreate([
                                     'telegram_user_id' => $telegram_user->id,
