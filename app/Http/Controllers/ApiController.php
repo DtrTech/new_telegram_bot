@@ -206,13 +206,22 @@ class ApiController extends Controller
                         $reply_markup['inline_keyboard'] = $inline_keyboard;
                     }
 
-                    $bot->sendPhoto([
-                        'chat_id' => $chat_id,
-                        'photo' => $image_to_set,
-                        'caption' => $telegram_bot->reply_message,
-                        'reply_markup' => json_encode($reply_markup),
-                        'parse_mode' => 'HTML'
-                    ]);
+                    if (!empty($reply_markup)) {
+                        $bot->sendPhoto([
+                            'chat_id' => $chat_id,
+                            'photo' => $image_to_set,
+                            'caption' => $telegram_bot->reply_message,
+                            'reply_markup' => json_encode($reply_markup),
+                            'parse_mode' => 'HTML'
+                        ]);
+                    }else{
+                        $bot->sendPhoto([
+                            'chat_id' => $chat_id,
+                            'photo' => $image_to_set,
+                            'caption' => $telegram_bot->reply_message,
+                            'parse_mode' => 'HTML'
+                        ]);
+                    }
                 }else if ($telegram_bot->reply_message != null) {
                     $inline_keyboard = [];
 
@@ -231,12 +240,20 @@ class ApiController extends Controller
                         $reply_markup['inline_keyboard'] = $inline_keyboard;
                     }
                     
-                    $bot->sendMessage([
-                        'chat_id' => $chat_id,
-                        'text' => $telegram_bot->reply_message,
-                        'reply_markup' => json_encode($reply_markup),
-                        'parse_mode' => 'HTML'
-                    ]);
+                    if (!empty($reply_markup)) {
+                        $bot->sendMessage([
+                            'chat_id' => $chat_id,
+                            'text' => $telegram_bot->reply_message,
+                            'reply_markup' => json_encode($reply_markup),
+                            'parse_mode' => 'HTML'
+                        ]);
+                    }else{
+                        $bot->sendMessage([
+                            'chat_id' => $chat_id,
+                            'text' => $telegram_bot->reply_message,
+                            'parse_mode' => 'HTML'
+                        ]);
+                    }
                 }
                 return response()->json(['status' => 'ok']);
             }else{

@@ -95,13 +95,22 @@ class TelegramMessageJob implements ShouldQueue
                         }
 
                         if($message->message_path == null){
-                            $bot->sendMessage([
-                                'chat_id' => $telegram_id,
-                                'text' => $message->message,
-                                'parse_mode' => 'HTML',
-                                'reply_markup' => json_encode($reply_markup),
-                                'disable_notification' => false,
-                            ]);
+                            if (!empty($reply_markup)) {
+                                $bot->sendMessage([
+                                    'chat_id' => $telegram_id,
+                                    'text' => $message->message,
+                                    'parse_mode' => 'HTML',
+                                    'reply_markup' => json_encode($reply_markup),
+                                    'disable_notification' => false,
+                                ]);
+                            }else{
+                                $bot->sendMessage([
+                                    'chat_id' => $telegram_id,
+                                    'text' => $message->message,
+                                    'parse_mode' => 'HTML',
+                                    'disable_notification' => false,
+                                ]);
+                            }
                         }else{
                             $extension = pathinfo($message->message_path, PATHINFO_EXTENSION);
 
@@ -117,25 +126,47 @@ class TelegramMessageJob implements ShouldQueue
                             if($type == "video"){
                                 $video = asset('storage/' . $message->message_path);
                                 $video_to_set = InputFile::create($video,'video.'.$extension);
-                                $bot->sendVideo([
-                                    'chat_id' => $telegram_id,
-                                    'video' => $video_to_set,
-                                    'caption' => $message->message,
-                                    'parse_mode' => 'HTML',
-                                    'reply_markup' => json_encode($reply_markup),
-                                    'disable_notification' => false,
-                                ]);
+                                
+                                if (!empty($reply_markup)) {
+                                    $bot->sendVideo([
+                                        'chat_id' => $telegram_id,
+                                        'video' => $video_to_set,
+                                        'caption' => $message->message,
+                                        'parse_mode' => 'HTML',
+                                        'reply_markup' => json_encode($reply_markup),
+                                        'disable_notification' => false,
+                                    ]);
+                                }else{
+                                    $bot->sendVideo([
+                                        'chat_id' => $telegram_id,
+                                        'video' => $video_to_set,
+                                        'caption' => $message->message,
+                                        'parse_mode' => 'HTML',
+                                        'disable_notification' => false,
+                                    ]);
+                                }
                             }else if($type == "image"){
                                 $images = asset('storage/' . $message->message_path);
                                 $image_to_set = InputFile::create($images,'image.'.$extension);
-                                $bot->sendPhoto([
-                                    'chat_id' => $telegram_id,
-                                    'photo' => $image_to_set,
-                                    'caption' => $message->message,
-                                    'parse_mode' => 'HTML',
-                                    'reply_markup' => json_encode($reply_markup),
-                                    'disable_notification' => false,
-                                ]);
+                                
+                                if (!empty($reply_markup)) {
+                                    $bot->sendPhoto([
+                                        'chat_id' => $telegram_id,
+                                        'photo' => $image_to_set,
+                                        'caption' => $message->message,
+                                        'parse_mode' => 'HTML',
+                                        'reply_markup' => json_encode($reply_markup),
+                                        'disable_notification' => false,
+                                    ]);
+                                }else{
+                                    $bot->sendPhoto([
+                                        'chat_id' => $telegram_id,
+                                        'photo' => $image_to_set,
+                                        'caption' => $message->message,
+                                        'parse_mode' => 'HTML',
+                                        'disable_notification' => false,
+                                    ]);
+                                }
                             }
                         }
                     }
