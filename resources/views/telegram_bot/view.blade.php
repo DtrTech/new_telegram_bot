@@ -14,7 +14,7 @@
                         </div>
                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item">Telegram Bot</li>
+                                <li class="breadcrumb-item">{{$telegram_bot->bot_name??''}} PM</li>
                             </ol>
                         </nav>
         
@@ -28,30 +28,21 @@
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">
-                    <a href="{{route('telegram_bot.create')}}" class="btn btn-outline-primary mb-2 me-4 _effect--ripple waves-effect waves-light" style="margin:10px 10px;">{{ __('message.button-create') }}</a>
                     <table id="style-3" class="table style-3 dt-table-hover non-hover">
                         <thead>
                             <tr>
-                                <th>Bot Name</th>
-                                <th>Bot Token</th>
-                                <th>Connected</th>
-                                <th>Actions</th>
+                                <th>No</th>
+                                <th>User</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($telegram_bot as $s)
+                            <?php $index = 1;?>
+                            @foreach($data as $row=>$s)
                                 <tr>
-                                    <td>{{$s->bot_name??''}}</td>
-                                    <td>{{$s->bot_token??''}}</td>
-                                    <td><?php echo $s->connected==1?'<b style="color:green">Connected</b>':'<b style="color:red">Not Connected</b>' ?></td>
-                                    <td>
-                                        @if($s->connected != 1)
-                                        <a class="btn btn-sm btn-primary" href="{{ route('telegram_bot.connect',$s) }}" title="Connect">Connect</a>
-                                        @endif
-                                        <a class="btn btn-sm btn-primary" href="{{ route('telegram_bot.edit',$s) }}" title="Edit">Edit</a>
-                                        <a class="btn btn-sm btn-primary" href="{{ route('telegram_bot.view',$s) }}" title="Edit">View</a>
-                                    </td>
+                                    <td>{{$index??''}}</td>
+                                    <td>{{$s??''}}</td>
                                 </tr>
+                                <?php $index+= 1;?>
                             @endforeach
                         </tbody>
                     </table>

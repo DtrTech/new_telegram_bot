@@ -119,10 +119,17 @@ class TelegramBotController extends Controller
 
     public function getUserList(TelegramBot $telegram_bot)
     {
-        $userList = $telegram_bot->users->where('is_active', 1)->mapWithKeys(function ($user) {
-            $fullName = $user->first_name . ' ' . $user->last_name;
+        $userList = $telegram_bot->users->where('is_active', 1)->sortByDesc('created_at')->mapWithKeys(function ($user) {
+            $fullName = $user->first_name . ' ' . $user->last_name. '(' . $user->username . ')';
             return [$user->id => $fullName];
         });
         return $userList;
+    }
+
+    public function view(TelegramBot $telegram_bot)
+    {
+        $data = $this->getUserList($telegram_bot);
+        return view('telegram_bot.view')->with('telegram_bot',$telegram_bot)->with('data',$data);
+
     }
 }

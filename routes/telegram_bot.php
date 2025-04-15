@@ -11,6 +11,7 @@ Route::prefix('/telegram_bot')->as('telegram_bot.')->middleware(['auth'])->group
     Route::post('/update/{telegram_bot}', 'TelegramBotController@update')->name('update');
     Route::get('/destroy/{telegram_bot}', 'TelegramBotController@destroy')->name('destroy');
     Route::get('/connect/{telegram_bot}', 'TelegramBotController@connect')->name('connect');
+    Route::get('/view/{telegram_bot}', 'TelegramBotController@view')->name('view');
 
     Route::get('/getGroupList/{telegram_bot}', 'TelegramBotController@getGroupList')->name('getGroupList');
     Route::get('/getUserList/{telegram_bot}', 'TelegramBotController@getUserList')->name('getUserList');
