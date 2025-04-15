@@ -14,7 +14,7 @@
                         </div>
                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item">Telegram Groups</li>
+                                <li class="breadcrumb-item">{{$telegram_group->group_name??''}}</li>
                             </ol>
                         </nav>
         
@@ -32,25 +32,14 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Group Id</th>
-                                <th>Group Name</th>
-                                <th>Group Type</th>
-                                <th>Bots</th>
-                                <th>Actions</th>
+                                <th>User</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($telegram_group as $row=> $s)
+                            @foreach($telegram_users as $index=>$s)
                                 <tr>
-                                    <td>{{$row+1??''}}</td>
-                                    <td>{{$s->group_telegram_id??''}}</td>
-                                    <td>{{$s->group_name??''}}</td>
-                                    <td>{{$s->group_type??''}}</td>
-                                    <td>{{$s->bot_names??''}}</td>
-                                    <td>
-                                        <a href="alert('COMING SOON')" class="btn btn-primary btn-sm" title="Connect">Chat</a>
-                                        <a class="btn btn-sm btn-primary" href="{{ route('telegram_group.view',$s) }}" title="Edit">View</a>
-                                    </td>
+                                    <td>{{$index+1??''}}</td>
+                                    <td>{{$s->first_name??''}} {{$s->last_name??''}} ({{$s->username??''}})</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -59,6 +48,9 @@
             </div>
         </div>
     </div>
+
+    
+    <!-- end: page -->
 </section>
 @endsection
 @section('scripts')
