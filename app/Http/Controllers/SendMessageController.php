@@ -92,6 +92,14 @@ class SendMessageController extends Controller
 
     public function list(Request $request, SendMessage $sendMessage)
     {
+        // Load only latest 100 details with their content
+        $sendMessage->load([
+            'sendMessageDetails' => function($query) {
+                $query->latest()->limit(100);
+            },
+            'sendMessageDetails.content'
+        ]);
+        
         return view('send_message.list', compact('sendMessage'));
     }
 
