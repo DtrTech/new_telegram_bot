@@ -86,7 +86,15 @@ class SendMessageController extends Controller
     public function view(Request $request, SendMessage $sendMessage)
     {
         $telegram_bots = TelegramBot::all();
-
+        
+        // Eager load only latest 100 details with their content
+        $sendMessage->load([
+            'sendMessageDetails' => function($query) {
+                $query->latest()->limit(100);
+            },
+            'sendMessageDetails.content'
+        ]);
+        
         return view('send_message.view', compact('sendMessage', 'telegram_bots'));
     }
 
@@ -95,7 +103,7 @@ class SendMessageController extends Controller
         // Load only latest 100 details with their content
         $sendMessage->load([
             'sendMessageDetails' => function($query) {
-                $query->latest()->limit(100);
+                $query->latest()->limit(500);
             },
             'sendMessageDetails.content'
         ]);
