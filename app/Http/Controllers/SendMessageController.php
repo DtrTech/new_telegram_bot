@@ -90,7 +90,7 @@ class SendMessageController extends Controller
         // Eager load only latest 100 details with their content
         $sendMessage->load([
             'sendMessageDetails' => function($query) {
-                $query->latest()->limit(100);
+                $query->latest()->limit(2000);
             },
             'sendMessageDetails.content'
         ]);
@@ -103,7 +103,7 @@ class SendMessageController extends Controller
         // Load only latest 100 details with their content
         $sendMessage->load([
             'sendMessageDetails' => function($query) {
-                $query->latest()->limit(500);
+                $query->latest()->limit(2000);
             },
             'sendMessageDetails.content'
         ]);
